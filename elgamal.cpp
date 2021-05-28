@@ -71,7 +71,7 @@ void encryption() {
     std::cout << "Input k (1 < k < p-1) = ";
     std::cin >> k;
     a = modpow(g, k, p);
-    b = modpow(y, k, p) * modpow(msg, 1, p);
+    b = modpow(y, k, p) * msg % p;
 
     std::cout << "Ciphertext = (" << a << ", " << b << ")" << std::endl;
 }
@@ -80,7 +80,7 @@ void decryption() {
     int a, b, x, p, m;
     std::cout << "Input a, b, x, p = ";
     std::cin >> a >> b >> x >> p;
-    m = modpow(a, p-1-x, p) * modpow(b, 1, p);
+    m = modpow(a, p-1-x, p) * b % p;
     std::cout << "Message = " << m << std::endl;
 }
 
