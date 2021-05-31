@@ -3,7 +3,7 @@
 /*
     For eficiency module and power (pow)
 */
-int modpow(int base, int root, int mod) {
+int modPow(int base, int root, int mod) {
     int dummy = base;
 
     for (int i = 0; i < root-1; i++) {
@@ -14,7 +14,7 @@ int modpow(int base, int root, int mod) {
 }
 
 int isRelativePrime(int a, int b) {
-    int dummy;
+    int dummy = 0;
 
     while (b != 0) {
         dummy = a % b;
@@ -26,17 +26,17 @@ int isRelativePrime(int a, int b) {
 }
 
 int isPrimitiveRoot(int prime, int root) {
-    int h[prime-2];
+    int h[prime-2] = {0};
     int hprime = prime;
 
     for(int i=0; i<prime; i++) {
-        h[i] = modpow(root, i+1, prime);
+        h[i] = modPow(root, i+1, prime);
     }
     
     int kampret = 1;
-
-    for(int i=0; i<sizeof(h)/sizeof(h[0]) - 1; i++) {
-        for (int j=kampret; j<sizeof(h)/sizeof(h[0]); j++) {
+    int arrsize = sizeof(h)/sizeof(h[0]);
+    for(int i=0; i<arrsize-1; i++) {
+        for (int j=kampret; j<arrsize; j++) {
             if (h[i] == h[j]) {
                 std::cout << "Not primite root" << std::endl;
                 return 0;
@@ -56,7 +56,7 @@ int isPrimitiveRoot(int prime, int root) {
 void keyBuilder(int p, int g, int x) {
     int y;
     if(isPrimitiveRoot(p, g) == 1) {
-        y = modpow(g, x, p);
+        y = modPow(g, x, p);
         std::cout << "Public key = (" << y << ", " << g << ", " << p << ")" << std::endl; 
         std::cout << "Private key = " << x << std::endl; 
     } else {
@@ -65,13 +65,16 @@ void keyBuilder(int p, int g, int x) {
 }
 
 void encryption() {
-    int msg = 48, k, a, b, y, g, p, x;
+    int msg = 48, y = 0, g = 0, p = 0, x = 0;
     std::cout << "Input y, g, p = ";
     std::cin >> y >> g >> p;
+    
     std::cout << "Input k (1 < k < p-1) = ";
+    int k = 0;
     std::cin >> k;
-    a = modpow(g, k, p);
-    b = modpow(y, k, p) * msg % p;
+    
+    int a = modPow(g, k, p);
+    int b = modPow(y, k, p) * msg % p;
 
     std::cout << "Ciphertext = (" << a << ", " << b << ")" << std::endl;
 }
@@ -80,12 +83,12 @@ void decryption() {
     int a, b, x, p, m;
     std::cout << "Input a, b, x, p = ";
     std::cin >> a >> b >> x >> p;
-    m = modpow(a, p-1-x, p) * b % p;
+    m = modPow(a, p-1-x, p) * b % p;
     std::cout << "Message = " << m << std::endl;
 }
 
 int main() {
-    int p, g, x;
+    int p = 0, g = 0, x = 0;
     std::cin >> p >> g >> x;
     keyBuilder(p, g, x);
 
