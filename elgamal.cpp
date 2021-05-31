@@ -3,7 +3,7 @@
 /*
     For eficiency module and power (pow)
 */
-int modPow(int base, int root, int mod) {
+int powMod(int base, int root, int mod) {
     int dummy = base;
 
     for (int i = 0; i < root-1; i++) {
@@ -30,7 +30,7 @@ int isPrimitiveRoot(int prime, int root) {
     int hprime = prime;
 
     for(int i=0; i<prime; i++) {
-        h[i] = modPow(root, i+1, prime);
+        h[i] = powMod(root, i+1, prime);
     }
     
     int kampret = 1;
@@ -56,7 +56,7 @@ int isPrimitiveRoot(int prime, int root) {
 void keyBuilder(int p, int g, int x) {
     int y;
     if(isPrimitiveRoot(p, g) == 1) {
-        y = modPow(g, x, p);
+        y = powMod(g, x, p);
         std::cout << "Public key = (" << y << ", " << g << ", " << p << ")" << std::endl; 
         std::cout << "Private key = " << x << std::endl; 
     } else {
@@ -73,8 +73,8 @@ void encryption() {
     int k = 0;
     std::cin >> k;
     
-    int a = modPow(g, k, p);
-    int b = modPow(y, k, p) * msg % p;
+    int a = powMod(g, k, p);
+    int b = powMod(y, k, p) * msg % p;
 
     std::cout << "Ciphertext = (" << a << ", " << b << ")" << std::endl;
 }
@@ -83,7 +83,7 @@ void decryption() {
     int a, b, x, p, m;
     std::cout << "Input a, b, x, p = ";
     std::cin >> a >> b >> x >> p;
-    m = modPow(a, p-1-x, p) * b % p;
+    m = powMod(a, p-1-x, p) * b % p;
     std::cout << "Message = " << m << std::endl;
 }
 
