@@ -1,3 +1,7 @@
+/*
+    CPP
+*/
+
 #include <iostream>
 
 /*
@@ -26,7 +30,7 @@ int isRelativePrime(int a, int b) {
 }
 
 int isPrimitiveRoot(int prime, int root) {
-    int h[prime-2] = {0};
+    int h[prime-2];
     int hprime = prime;
 
     for(int i=0; i<prime; i++) {
