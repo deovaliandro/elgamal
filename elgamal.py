@@ -3,13 +3,21 @@ def is_relative_prime(prime, param):
         prime, param = param, prime % param
     return prime
 
-
 def is_primitive_root(prime, root):
+    """
+    Root is primitive root from prime
+    :param prime: int
+    :param root: int
+    :return: int
+    """
     primitive_root = []
     for i in range(prime - 1):
         primitive_root.append(pow(root, i + 1) % prime)
 
+    # Untuk memastikan tidak terjadi pembandingan primitive_root pada indeks j dan i yang sama
     kampret = 1
+    
+    # Membandingkan apakah tidak ada data yang sama
     for i in range(len(primitive_root)):
         for j in range(kampret, len(primitive_root) - 1):
             if primitive_root[i] == primitive_root[j + 1]:
