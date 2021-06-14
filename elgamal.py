@@ -1,6 +1,12 @@
-def is_relative_prime(prime, param):
-    while param != 0:
-        prime, param = param, prime % param
+def is_relative_prime(prime, data):
+    """
+    Prime is relative prime with data in primitive root
+    :param prime: int
+    :param data: int
+    :return: int
+    """
+    while data != 0:
+        prime, data = data, prime % data
     return prime
 
 def is_primitive_root(prime, root):
@@ -32,8 +38,13 @@ def is_primitive_root(prime, root):
 
 
 def key_builder():
-    print("Input p, g and x")
+    """
+    Count public and private key
+    """
+    print("Input prime number, root and secret key (x)")
     prime, root, secret_key = [int(x) for x in input().split(" ")]
+
+    # root number must be primitive root from prime
     if is_primitive_root(prime, root) == 1:
         y = pow(root, secret_key) % prime
         print(f"Public Key (%d, %d, %d)" % (y, root, prime))
@@ -41,15 +52,22 @@ def key_builder():
 
 
 def encryption():
+    """
+    Encryption message with public key
+    """
+
+    # message is one character, string will be add later
     print("Input message")
     message = input()
 
     print("Input y, g and p (public key)")
     y, g, p = [int(x) for x in input().split(" ")]
 
+    # k is random number from 1 <= k <= p-1
     print("Input k")
     k = int(input())
 
+    # the ciphertext will be a pair of a and b
     a = pow(g, k) % p
     b = (pow(y, k) * ord(message)) % p
 
@@ -57,17 +75,28 @@ def encryption():
 
 
 def decryption():
+    """
+    Decryption message
+    """
     a, b, x, p = [int(x) for x in input().split(" ")]
     m = pow(a, (p-1-x)) * b % p
     print(f"Message %c" % m)
 
 
+"""
+Example:
+Input prime number, root and secret key (x) = 2273, 3 and 243
+
+Public Key 461 3 2273
+Private key 243
+
+Message = a
+k = 1463
+
+Ciphertext (1439, 2004)
+
+with decryption(), message = a
+"""
 key_builder()
-# 2273 3 243
-# Public Key 461 3 2273
-# Private key 243
 encryption()
-# Input k
-# 1463
-# Ciphertext (1439, 2004)
 decryption()
