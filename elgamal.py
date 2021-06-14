@@ -53,6 +53,7 @@ def decryption():
     m = pow(a, (p-1-x)) * b % p
     print(f"Message %c" % m)
 
+
 key_builder()
 # 2273 3 243
 # Public Key 461 3 2273
